@@ -1,7 +1,10 @@
-from django.shortcuts import render
+from django.http import HttpResponse, Http404
+from django.http.response import HttpResponseNotAllowed
+from django.shortcuts import render, redirect, get_object_or_404
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from .models import Funcionario
-from .forms import FuncionarioForm
+from django.urls import reverse
+from .models import Funcionario, Contato
+from .forms import FuncionarioForm, ContatoForm
 
 
 class ListaFuncionarioView(ListView):
@@ -32,3 +35,39 @@ class FuncionarioUpdateView(UpdateView):
 class FuncionarioDeleteView(DeleteView):
     model = Funcionario
     success_url = '/funcionarios/'
+
+
+def contatos(request, pk_funcionario):
+    contatos = Contato.objects.filter(funcionario=pk_funcionario)
+    return render(request, 'contato/contato_list.html', {'contatos': contatos, 'pk_funcionario': pk_funcionario})
+    
+    
+def contato_novo(request, pk_funcionario):
+    form = ContatoForm()
+    if request.method == "POST":
+        form = ContatoForm(request.POST)
+        if form.is_valid():
+            contato = form.save(commit=False)
+            contato.funcionario_id = pk_funcionario;
+            contato.save()
+            return redirect(reverse('funcionario.contatos', args=[pk_funcionario]))
+        
+    return render(request, 'contato/contato_form.html', {'form': form})
+
+
+def contato_atualizar(request, pk_funcionario, pk):
+    contato = get_object_or_404(Contato, pk=pk)
+    form = ContatoForm(instance=contato)
+    if request.method == "POST":
+        form = ContatoForm(request.POST, instance=contato)
+        if form.is_valid():
+            form.save()
+            return redirect(reverse('funcionario.contatos', args=[pk_funcionario]))
+        
+    return render(request, 'contato/contato_form.html', {'form': form})
+ 
+ 
+def contato_deletar(request, pk_funcionario, pk):
+    contato = get_object_or_404(Contato, pk=pk)
+    contato.delete()
+    return redirect(reverse('funcionario.contatos', args=[pk_funcionario]))

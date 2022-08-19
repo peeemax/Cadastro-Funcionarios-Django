@@ -1,6 +1,6 @@
+from django.forms import ModelForm
 from django import forms
-from django.forms import fields, models
-from .models import Funcionario
+from .models import Contato, Funcionario
 
 
 class FuncionarioForm(forms.ModelForm):
@@ -12,3 +12,9 @@ class FuncionarioForm(forms.ModelForm):
         class Meta:
                 model = Funcionario
                 fields = ['nome_completo', 'cpf', 'data_nascimento', 'cargo', 'ativa']
+
+
+class ContatoForm(forms.ModelForm):
+        class Meta:
+                model = Contato
+                fields = ['nome', 'email', 'telefone']

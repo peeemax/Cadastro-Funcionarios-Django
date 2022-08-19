@@ -32,6 +32,7 @@
             <td>
                 <a href="{% url 'funcionario.atualizar' funcionario.pk %}">Atualizar</a>
                 <a href="{% url 'funcionario.deletar' funcionario.pk %}">Deletar</a>
+                <a href="{% url 'funcionario.contatos' funcionario.pk %}">Contatos</a>
             </td>
         </tr>
         {% endfor %}

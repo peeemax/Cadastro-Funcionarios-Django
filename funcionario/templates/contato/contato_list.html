@@ -1,0 +1,32 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<form method="GET">
+    <input type="text" name="nome" placeholder="Buscar por nome"/>
+    <input type="submit" value="Buscar"/>
+</form>
+<a href="{% url 'funcionario.novo' pk_funcionario %}">Novo</a>
+<table>
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>E-mail</th>
+            <th>Telefone</th>
+            <th>Ações</th>
+        </tr>
+    </thead>        
+    <tbody>
+        {% for contato in contatos %}
+        <tr>
+            <td>{{ contato.nome }}</td>
+            <td>{{ contato.email }}</td>
+            <td>{{ contato.telefone }}</td>
+            <td>
+                <a href="{% url 'funcionario.atualizar' pk_funcionario contato.pk %}">Atualizar</a> 
+                <a href="{% url 'funcionario.deletar' pk_funcionario contato.pk %}">Deletar</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock content %}
