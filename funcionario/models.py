@@ -9,6 +9,7 @@ class Funcionario(models.Model):
     data_nascimento = models.DateField(null=True)
     cargo = models.CharField(max_length=256)
     ativa = models.BooleanField(default=True)
+    usuario = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
 
     def __str__(self) -> str:
         return self.nome_completo
