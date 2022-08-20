@@ -12,12 +12,8 @@
     <title>Cadastro de Funcionários</title>
 </head>
 <body>
-    <div class="div-1">  
-    <ul>
-        <li><a href="{% url 'home' %}">Home</a> </li>
-        <li><a href="{% url 'funcionario.index' %}">Funcionários</a> </li>
-    </ul>
+    {% include 'main/menu.html' %}
     {% block content %}
-    {% endblock content %} </div>
+    {% endblock content %} 
 </body>
 </html>

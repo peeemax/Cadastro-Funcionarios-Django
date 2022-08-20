@@ -13,6 +13,7 @@ class ListaFuncionarioView(ListView):
     
     def get_queryset(self):
         queryset = super().get_queryset()
+        queryset = queryset.filter(usuario=self.request.user)
         filtro_nome = self.request.GET.get('nome') or None
         
         if filtro_nome:
@@ -24,6 +25,10 @@ class FuncionarioCreateView(CreateView):
     model = Funcionario
     form_class = FuncionarioForm
     success_url = '/funcionarios/'
+    
+    def form_valid(self, form):
+        form.instance.usuario = self.request.user
+        return super().form_valid(form)
 
 
 class FuncionarioUpdateView(UpdateView):

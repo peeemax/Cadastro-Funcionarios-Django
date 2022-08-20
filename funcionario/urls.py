@@ -1,18 +1,19 @@
 from django.urls import path
+from django.contrib.auth.decorators import login_required
 from .views import ListaFuncionarioView, FuncionarioCreateView, FuncionarioUpdateView, FuncionarioDeleteView
 from . import views
 
 urlpatterns = [
-    path('', ListaFuncionarioView.as_view(), name='funcionario.index'),
-    path('novo/', FuncionarioCreateView.as_view(), name='funcionario.novo'),
-    path('<int:pk>/atualizar', FuncionarioUpdateView.as_view(), name='funcionario.atualizar'),
-    path('<int:pk>/deletar', FuncionarioDeleteView.as_view(), name='funcionario.deletar'),
+    path('', login_required(ListaFuncionarioView.as_view()), name='funcionario.index'),
+    path('novo/', login_required(FuncionarioCreateView.as_view()), name='funcionario.novo'),
+    path('<int:pk>/atualizar', login_required(FuncionarioUpdateView.as_view()), name='funcionario.atualizar'),
+    path('<int:pk>/deletar', login_required(FuncionarioDeleteView.as_view()), name='funcionario.deletar'),
     path('<int:pk_funcionario>/contatos', 
-         views.contatos, name='funcionario.contatos'),
+         login_required(views.contatos), name='funcionario.contatos'),
     path('<int:pk_funcionario>/contato/novo/', 
-         views.contato_novo, name='funcionario.novo'),
+         login_required(views.contato_novo), name='funcionario.novo'),
     path('<int:pk_funcionario>/contato/<int:pk>/atualizar/', 
-         views.contato_atualizar, name='funcionario.atualizar'),
+         login_required(views.contato_atualizar), name='funcionario.atualizar'),
     path('<int:pk_funcionario>/contato/<int:pk>/deletar/', 
-         views.contato_deletar, name='funcionario.deletar')
+         login_required(views.contato_deletar), name='funcionario.deletar')
 ]
