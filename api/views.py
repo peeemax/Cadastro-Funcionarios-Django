@@ -1,4 +1,4 @@
-from winreg import QueryValue
+from django.shortcuts import render
 from rest_framework import viewsets
 from rest_framework import permissions
 from api.serializers import FuncionarioSerializer
