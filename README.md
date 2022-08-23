@@ -18,9 +18,6 @@ Aplicação de conceitos em:
 - Banco de Dados;
 - Heroku;
 
-SCREENSHOT DO PROJETO
-
-
 LINK DO PROJETO
 Para visualizar o projeto no seu navegador utilize o link abaixo:
 
